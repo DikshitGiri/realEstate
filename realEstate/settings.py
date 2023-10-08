@@ -54,7 +54,7 @@ ROOT_URLCONF = 'realEstate.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'realEstate'/'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
