@@ -1,68 +1,81 @@
-{% extends 'pages/base.html' %}
-{%block title%} {%endblock%}
-{%block content%}
-
+{% extends 'pages/base.html' %} {%block title%} {%endblock%} {%block content%}
 {%include '../layout/top_and_side_nav.html'%}
 
 <div class="app-wrapper">
-    <br/><br/> 
-    <div class="app-content pt-3 p-md-3 p-lg-4">
-        
-        <div class="container-xl">
-            
-            <h1 class="app-page-title">Add Property</h1>
-    <div class="container mt-5">
-        
-        <form action="#" method="POST" enctype="multipart/form-data">
-            <!-- Property Name -->
-            <div class="mb-3">
-                <label for="propertyName" class="form-label">Property Name</label>
-                <input type="text" class="form-control" id="propertyName" name="propertyName" required>
-            </div>
-            
-            <!-- Property Type -->
-            <div class="mb-3">
-                <label for="propertyType" class="form-label">Property Type</label>
-                <select class="form-select" id="propertyType" name="propertyType" required>
-                    <option value="house">House</option>
-                    <option value="apartment">Apartment</option>
-                    
-                    <!-- Add more options as needed -->
-                </select>
-            </div>
+	<br /><br />
+	<div class="app-content pt-3 p-md-3 p-lg-4">
+		<div class="container-xl">
+			<h1 class="app-page-title">Add Property</h1>
+			<div class="container mt-5">
+				<form method="POST" action="{%url 'property_db' %}"  enctype="multipart/form-data">
+				   {%csrf_token%}
+					<div class="mb-3">
+						<label for="propertyType" class="form-label">Property Type</label>
+						<select
+							class="form-select"
+							id="propertyType"
+							name="propertyType"
+							required>
+							{% for property_type in property_types %}
+							<option value="{{ property_type }}">{{ property_type }}</option>
+						{% endfor %}
+						</select>
+					</div>
 
-            <!-- Property Location -->
-            <div class="mb-3">
-                <label for="propertyLocation" class="form-label">Location</label>
-                <input type="text" class="form-control" id="propertyLocation" name="propertyLocation" required>
-            </div>
+					<!-- Property Location -->
+					<div class="mb-3">
+						<label for="propertyLocation" class="form-label">Location</label>
+						<input
+							type="text"
+							class="form-control"
+							id="propertyLocation"
+							name="propertyLocation"
+							required />
+					</div>
 
-            <!-- Price Range -->
-            <div class="mb-3">
-                <label for="priceRange" class="form-label">Price Range</label>
-                <input type="text" class="form-control" id="priceRange" name="priceRange" required>
-            </div>
+					<!-- Price Range -->
+					<div class="mb-3">
+						<label for="priceRange" class="form-label">Price Range</label>
+						<input
+							type="text"
+							class="form-control"
+							id="priceRange"
+							name="priceRange"
+							required />
+					</div>
 
-            <!-- Property Image -->
-            <div class="mb-3">
-                <label for="propertyImage" class="form-label">Property Image</label>
-                <input type="file" class="form-control" id="propertyImage" name="propertyImage" accept="image/*" required>
-            </div>
+					<!-- Property Image -->
+					<div class="mb-3">
+						<label for="propertyImage" class="form-label">Property Image</label>
+						<input
+							type="file"
+							class="form-control"
+							id="propertyImage"
+							name="propertyImage"
+							accept="image/*"
+							required />
+					</div>
 
-            <!-- Property Details -->
-            <div class="mb-3">
-                <label for="propertyDetails" class="form-label">Property Details</label>
-                <textarea class="form-control" id="propertyDetails" name="propertyDetails" rows="4" required></textarea>
-            </div>
+					<!-- Property Details -->
+					<div class="mb-3">
+						<label for="propertyDetails" class="form-label"
+							>Property Details</label
+						>
+						<textarea
+							class="form-control"
+							id="propertyDetails"
+							name="propertyDetails"
+							rows="4"
+							required></textarea>
+					</div>
 
-            <!-- Submit Button -->
-            <button type="submit" class="btn btn-primary">Add Property</button>
-        </form>
-    </div>
-    </div>
-    </div>
-    </div>
-    
+					<!-- Submit Button -->
+					<button type="submit" class="btn btn-primary">Add Property</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
 {%endblock%}
-    <!-- Include Bootstrap JS and Popper.js (for Bootstrap's JavaScript plugins) -->
-
+<!-- Include Bootstrap JS and Popper.js (for Bootstrap's JavaScript plugins) -->

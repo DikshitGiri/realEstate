@@ -5,15 +5,16 @@
 {%include '../layout/top_and_side_nav.html'%}
 
 <div class="app-wrapper">
-    <br/><br/> 
+    
     <div class="app-content pt-3 p-md-3 p-lg-4">
         
         <div class="container-xl">
             
-
+<div class="container mt-5">
+    <h1 class="app-page-title mb-0">My Docs</h1>
             <div class="row g-3 mb-4 align-items-center justify-content-between">
                 <div class="col-auto">
-                    <h1 class="app-page-title mb-0">My Docs</h1>
+                    
                 </div>
                 <div class="col-auto">
                      <div class="page-utilities">
@@ -37,37 +38,44 @@
 
 
             <!-- card starts here -->
+           
             <div class="row g-4">
-                <div class="col-6 col-md-4 col-xl-3 col-xxl-2">
+                {% for item in property_list %}
+                <div class="col-md-4 mb-3 col-xl-4 col-6 ">
+                <!-- <div class="col-6 col-md-4 col-xl-3 col-xxl-2"> -->
                     <div class="app-card app-card-doc shadow-sm  h-100">
                         <div class="app-card-thumb-holder p-3">
                             <div class="app-card-thumb">
-                                <img class="thumb-image" src="assets/images/doc-thumb-1.jpg" alt="">
+                                <img class="thumb-image" src="{{ item.image.url }}" alt="">
                             </div>
                              <a class="app-card-link-mask" href="#file-link"></a>
                         </div>
+                        
                         <div class="app-card-body p-3 has-card-actions">
                             
-                            <h4 class="app-doc-title truncate mb-0"><a href="#file-link">Image lorem ipsum dolor sit amet</a></h4>
+                            <h4 class="app-doc-title truncate mb-0">{{item.details}}</h4>
                             <div class="app-doc-meta">
                                 <ul class="list-unstyled mb-0">
-                                    <li><span class="text-muted">Type:</span> Image</li>
-                                    <li><span class="text-muted">Size:</span> 8.2MB</li>
-                                    <li><span class="text-muted">Edited:</span> 2 days ago</li>
+                                    <li><span class="text-muted">Type:</span>{{item.property_type}} </li>
+                                    <li><span class="text-muted">Price:</span>{{item.price_range}}</li>
+                                    <li><span class="text-muted">Location:</span>{{item.location}}</li>
                                 </ul>
                             </div><!--//app-doc-meta-->
                             
                     
                              
-                            </div><!--//app-card-actions-->
+                         </div><!--//app-card-actions-->
                                 
                         </div><!--//app-card-body-->
 
                     </div><!--//app-card-->
+                <!-- </div> -->
+
+                {% endfor%}
                 </div>
             </div>
-
- 	
+           
+           
 
             </div>
             </div>

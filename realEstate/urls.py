@@ -17,13 +17,26 @@ Including another URLconf
 from App import views
 from django.contrib import admin
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
 
 
 urlpatterns = [
+    # pages
     path('admin/', admin.site.urls),
+    path('index',views.index, name="index"),
     path('', views.realEstate_dashboard, name='realEstate_dashboard_page'),
     path('add_property',views.add_property_page, name='add_property_page'),
     path('docs',views.docs_page,name='docs_page'),
-    path('property_table', views.property_table_page,name='property_table')
+    path('property_table', views.property_table_page,name='property_table_page'),
+    path ('property_type',views.property_type_page,name="property_type_page"),
+    # pages ends
+     
+    # insertion process begins
+    path ('property_type_db', views.property_type_db,name="property_type_db"),
+    path ('property_db', views.property_db,name="property_db"),
+   
+
+    # insertion process ends
   
-]
+]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -18,20 +18,36 @@
                         <th>Type</th>
                         <th>Location</th>
                         <th>Price Range</th>
+                        
+                        <th>Details</th>
                         <th> Image</th>
+                        <th>Action</th>
                        
                     </tr>
                 </thead>
+                
                 <tbody>
+                    {% for item in property_list%}
+                   
                     <tr>
-                        <td>1</td>
-                        <td>Bonglow</td>
-                        <td>Shree Antu</td>
-                        <td>6cr</td>
-                        <td>image</td>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{item.property_type}}</td>
+                        <td>{{item.location}}</td>
+                        <td>{{item.price_range}}</td>
+                        
+                        <td>{{item.details}}</td>
+                        <td><img src="{{ item.image.url }}"  width="50" height="50"></td>                      
+                        <td><div class="btn-group" role="group">
+                            <button type="button" class="btn btn-primary">
+                                 Update
+                            </button>
+                            <button type="button" class="btn btn-danger">
+                                 Delete
+                            </button>
+                        </div></td>
                         
                     </tr>
-                    
+                {% endfor %}
                 </tbody>
                 
             </table>
@@ -40,5 +56,4 @@
             </div>
             </div>
             </div>
-           
-            {%endblock%}
+{% endblock %}

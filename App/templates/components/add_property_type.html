@@ -1,0 +1,42 @@
+{% extends 'pages/base.html' %} {%block title%} {%endblock%} {%block content%}
+{%include '../layout/top_and_side_nav.html'%}
+{%include '../layout/toast_alert.html'%}
+<div class="app-wrapper">
+	
+	<br /><br />
+	<div class="app-content pt-3 p-md-3 p-lg-4">
+		<div class="container-xl">
+			<h1 class="app-page-title">Add Property Type</h1>
+			<div class="container mt-5">
+				<form method="POST" action="{% url 'property_type_db'%}">
+					{%csrf_token%}
+					<div class="row mb-3">
+						<label for="propertyType" class="col-sm-2 col-form-label text-end"
+							>Property Type:</label
+						>
+						<div class="col-sm-10">
+							<input
+								type="text"
+								class="form-control"
+								id="propertyType"
+								name="property_type"
+								placeholder="Enter property type" />
+						</div>
+					</div>
+
+					<!-- Add more fields as needed -->
+
+					<div class="row mb-3">
+						<div class="col-sm-10 offset-sm-2">
+							<button type="submit" class="btn btn-primary">Submit</button>
+						</div>
+					</div>
+				</form>
+				
+
+			</div>
+		</div>
+	</div>
+</div>
+
+{%endblock%}

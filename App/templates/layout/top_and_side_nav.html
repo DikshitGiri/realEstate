@@ -1,3 +1,4 @@
+{%load static%}
 <header class="app-header fixed-top">	   	            
     <div class="app-header-inner">  
         <div class="container-fluid py-2">
@@ -177,7 +178,7 @@
                         <div id="submenu-1" class="collapse submenu submenu-1" data-bs-parent="#menu-accordion">
                             <ul class="submenu-list list-unstyled">
                                 <li class="submenu-item"><a class="submenu-link" href="{%url 'add_property_page'%}">Add Property</a></li>
-                                <li class="submenu-item"><a class="submenu-link" href="{%url 'property_table' %}">Property List</a></li>
+                                <li class="submenu-item"><a class="submenu-link" href="{%url 'property_table_page' %}">Property List</a></li>
 
                             </ul>
                         </div>
@@ -212,7 +213,7 @@
                         </a><!--//nav-link-->
                         <div id="submenu-2" class="collapse submenu submenu-2" data-bs-parent="#menu-accordion">
                             <ul class="submenu-list list-unstyled">
-                                <li class="submenu-item"><a class="submenu-link" href="#">Add Property Type</a></li>
+                                <li class="submenu-item"><a class="submenu-link" href="{%url 'property_type_page'%}">Add Property Type</a></li>
 
                             </ul>
                         </div>
@@ -231,4 +232,7 @@
            
         </div><!--//sidepanel-inner-->
     </div><!--//app-sidepanel-->
+    <!-- <script src="{% static 'assets/js/app.js' %}"></script>  -->
 </header>
+  <!-- Page Specific JS -->
+  
