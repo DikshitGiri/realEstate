@@ -93,16 +93,19 @@
     <br/><br/> <br/>
     <!-- Search Form -->
     <div class="container search-container">
-        <form>
+        <form method="post" action="{%url 'property_search' %}">
+            {%csrf_token%}
             <div class="row">
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="type">Type</label>
                         <div class="input-group">
-                            <select class="form-control" id="type">
-                                <option><i class="fas fa-home"></i> Option 1</option>
-                                <option><i class="fas fa-building"></i> Option 2</option>
-                                <option><i class="fas fa-store"></i> Option 3</option>
+                            <select class="form-control" id="type" name="property_type">
+                                
+                                {%for item in property_list %}
+                                <option>{{item.property_type}}</option>
+                                {%endfor%}
+                              
                             </select>
                         </div>
                     </div>
@@ -111,10 +114,10 @@
                     <div class="form-group">
                         <label for="location">Location</label>
                         <div class="input-group">
-                            <select class="form-control" id="location">
-                                <option><i class="fas fa-map-marker-alt"></i> Option 1</option>
-                                <option><i class="fas fa-map"></i> Option 2</option>
-                                <option><i class="fas fa-globe"></i> Option 3</option>
+                            <select class="form-control" id="location" name="location">
+                                {%for item in property_list %}
+                                <option><i class="fas fa-home"></i>{{item.location}}</option>
+                                {%endfor%}
                             </select>
                         </div>
                     </div>
@@ -123,10 +126,10 @@
                     <div class="form-group">
                         <label for="price-range">Price Range</label>
                         <div class="input-group">
-                            <select class="form-control" id="price-range">
-                                <option><i class="fas fa-dollar-sign"></i> Option 1</option>
-                                <option><i class="fas fa-coins"></i> Option 2</option>
-                                <option><i class="fas fa-money-bill-wave"></i> Option 3</option>
+                            <select class="form-control" id="price-range" name="price_range">
+                                {%for item in property_list %}
+                                <option><i class="fas fa-home"></i>{{item.price_range}}</option>
+                                {%endfor%}
                             </select>
                         </div>
                     </div>

@@ -3,12 +3,15 @@ from django.shortcuts import redirect, render
 from .models import Property_type
 from .models import Property
 from django.contrib import messages
+from django.contrib.auth.models import User
+from django.contrib.auth import login,authenticate
 
 
 # Create your views here.
 # Pages starts
 def index(request):
-    return render(request, "pages/index.html")
+    property_list=Property.objects.all()
+    return render(request, "pages/index.html",{'property_list':property_list})
 
 
 def realEstate_dashboard(request):
@@ -34,6 +37,11 @@ def property_table_page(request):
 def property_type_page(request):
     return render(request, "components/add_property_type.html")
 
+def broker_login_page(request):
+    return render(request,'pages/broker_login.html')
+
+def broker_register_page(request):
+    return render(request,'pages/broker_register.html')
 
 # pages End
 
@@ -44,11 +52,44 @@ def estate_owner_login(request):
 
 
 def broker_register(request):
-    return HttpResponse("reg here")
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password1']
+        password2 = request.POST['password2']
+        print(username,password)
+        
+        
+        if password == password2:
+            if not User.objects.filter(username=username).exists():
+                user = User.objects.create_user(username=username, password=password)
+                user.save()
+                return HttpResponse('user registered successfully')
+                # return redirect('broker_login_page')  # Redirect to the login page or another desired page
+            else:
+                return render(request, 'pages/broker_register.html', {'error': 'Username is already taken.'})
+        else:
+            return render(request, 'pages/broker_register.html', {'error': 'Passwords do not match.'})
+    return render(request, 'page/broker_register.html')
 
 
 def broker_login(request):
-    return HttpResponse("hello broker")
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        print(username,password)
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            return HttpResponse("login succed")
+            # return redirect('#')  
+        else:
+            return HttpResponse('invalid username or password')
+            # error_message = 'Invalid username or password.'
+
+    return render(request, 'pages/broker_login.html')
+    # return render(request,'pages/login.html')
 
 
 # login and register ends here
@@ -102,7 +143,10 @@ def property_db(request):
 
 
 # insertion ends
+
 # retrival Begins
+def property_search(request):
+    return HttpResponse('search is hit')
 
 
 
