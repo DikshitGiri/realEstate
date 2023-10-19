@@ -1,4 +1,4 @@
-urls to check
-/realEstate_dashboard for admin dashboard
-/broker for broker login
+urls to check<br/>
+/realEstate_dashboard for admin dashboard<br/>
+/broker for broker login<br/>
 default is landing page for end customer

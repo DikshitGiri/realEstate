@@ -11,7 +11,8 @@ from django.contrib.auth import login,authenticate
 # Pages starts
 def index(request):
     property_list=Property.objects.all()
-    return render(request, "pages/index.html",{'property_list':property_list})
+    properties=Property.objects.all()
+    return render(request, "pages/index.html",{'property_list':property_list,'properties':properties})
 
 
 def realEstate_dashboard(request):
@@ -42,6 +43,10 @@ def broker_login_page(request):
 
 def broker_register_page(request):
     return render(request,'pages/broker_register.html')
+def update_property_page(request,id):
+    updateable_property=Property.objects.get(id=id)
+    property_type=Property_type.objects.all()
+    return render(request,'components/property_update.html',{'updateable_property':updateable_property,'property_types':property_type})
 
 # pages End
 
@@ -69,7 +74,8 @@ def broker_register(request):
                 return render(request, 'pages/broker_register.html', {'error': 'Username is already taken.'})
         else:
             return render(request, 'pages/broker_register.html', {'error': 'Passwords do not match.'})
-    return render(request, 'page/broker_register.html')
+    else:  
+        return render('broker_register_page')
 
 
 def broker_login(request):
@@ -129,8 +135,7 @@ def property_db(request):
             property.save()
             return HttpResponse("insertion successfull")
         except Exception as e:
-            return HttpResponse("failed")
-        
+            return HttpResponse("failed")      
         
         
     else:
@@ -144,10 +149,69 @@ def property_db(request):
 
 # insertion ends
 
-# retrival Begins
+# search Begins
 def property_search(request):
-    return HttpResponse('search is hit')
+    properties=Property.objects.all()
+    if request.method=='POST':
+     type=request.POST.get('property_type')
+     location=request.POST.get('location')
+     price=request.POST.get('price_range')
+     filters={}
+     if type:
+        filters['property_type__icontains'] = type  # Case-insensitive text search
 
+     if location:
+        filters['location__icontains'] = location  # Case-insensitive text search
 
+     if price:
+        filters['price_range'] = price  # Filter properties with price less than or equal to the provided value
 
-# retrival ends
+     properties = Property.objects.filter(**filters)
+     if properties:
+        return render( request, './pages/search_result.html',{'properties':properties})
+     else:
+         return HttpResponse("search result not found")
+    # else:
+    #   return redirect( 'index')
+# search ends
+
+# updation begins
+def property_update_db(request, id):
+    if request.method=='POST':        
+        type=request.POST.get('propertyType')
+        location=request.POST.get('propertyLocation')
+        price=request.POST.get('priceRange')
+        image=request.FILES.get('propertyImage')
+        details=request.POST.get('propertyDetails')
+      
+        try:
+          property=Property.objects.get(id=id) 
+          property.property_type=type
+          property.location=location
+          property.price_range=price
+          property.details=details
+          if image:
+            property.image=image 
+
+          property.save()
+          return HttpResponse("updated successfully")
+
+         
+        except property.DoesNotExist:
+          return HttpResponse("property not found")
+               
+        
+        
+    else:
+        return redirect ("update_property_page")
+# updation ends
+
+#deletion begins
+def delete_property(request,id):
+    property=Property.objects.get(id=id)
+    property.delete()
+    return redirect('property_table_page')
+
+   
+
+#deletion ends

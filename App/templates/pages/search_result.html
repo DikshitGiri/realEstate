@@ -1,0 +1,145 @@
+{% extends 'pages/base.html' %}
+{%block content%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OnlineKarobar</title>
+    <!-- Include Bootstrap CSS -->
+
+    <!-- Custom CSS -->
+    <style>
+        /* Add your custom CSS styles here */
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .navbar {
+            background-color: #007bff;
+        }
+
+        .navbar-brand {
+            color: #ffffff;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .search-container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .card {
+            margin: 10px;
+        }
+
+        /* Custom style for the house image and slogan row */
+       
+
+        .house-image {
+            width: 100%;
+            height: auto;
+            border-top-left-radius: 70px;
+
+        }
+
+        .slogan {
+            font-size: 24px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="data:image/jpeg;base64,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"  width="40" height="40" class="mr-2">
+                OnlineKarobar
+            </a>
+        </div>
+    </nav>
+    <br/><br/><br/><br/>
+    <!-- House Image and Slogan Row -->
+    <div class="container "  >
+        
+            <div class="row">
+                <div class="col-md-6"><br/><br/><br/><br/>
+                    <h1 class="slogan">Find Your Dream Home with <br/> OnlineKarobar</h1>
+                    <p style="color: #007bff;">Your trusted partner in real estate</p>
+                   
+                </div>
+                <div class="col-md-6">
+                    <!-- Clipped image within the bordered box -->
+                    <img src="https://img.freepik.com/free-photo/blue-house-with-blue-roof-sky-background_1340-25953.jpg" alt="Beautiful House" class="house-image">
+                </div>
+            </div>
+
+            
+      
+    </div>
+    <br/><br/> <br/>
+    <!-- Search Form -->
+    <div class="container text-center">
+        <h1 style="font-size: 36px; color: #007bff; font-weight: bold; line-height: 1.2;">
+            Discover Your Dream Property<br>
+            <span style="color: #ff5722;">Where Imagination Meets Reality</span>
+        </h1>
+    </div><br/><br/>
+    <!-- Search Results -->
+    <div class="container mt-4">
+        {% for items in properties%}    
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card border-0">
+                    <img src="{{items.image.url}}"  class="card-img-top" style="height: 180px;">
+                    <div class="card-body">
+                        <h5 class="card-title text-primary">{{items.property_type}} </h5>
+                        <p class="card-text"><b>Location</b> {{items.location}} </p>
+                        <p class="card-text text-success"><b>Price</b> {{items.price_range}} </p>
+                        <p class="card-text"><b>Details</b> {{items.details}}</p>
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-primary">Contact</button>
+                            <button class="btn btn-danger">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>    
+        
+    {%endfor%}
+    
+    </div>
+   
+    
+<!-- Footer -->
+<footer class="bg-dark text-light text-center py-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h3>Contact Us</h3>
+                <p>If you have any questions or need assistance, feel free to reach out to us:</p>
+                <p>Email: info@onlinekarobar.com</p>
+                <p>Phone: +1 (123) 456-7890</p>
+            </div>
+            <div class="col-md-6">
+                <h3>Follow Us</h3>
+                <p>Stay connected with us on social media for updates and news:</p>
+                <a href="#" class="text-light me-2"><i class="fab fa-facebook"></i></a>
+                <a href="#" class="text-light me-2"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="text-light me-2"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>
+
+
+
+
+{%endblock%}

@@ -45,7 +45,11 @@ urlpatterns = [
 
     # insertion process ends
     # retrival begins
-    path('property_search', views.property_search,name='property_search')
+    path('property_search', views.property_search,name='property_search'),
     # retrival ends
-  
+    # update and deletion begins
+    path('delete_property/<int:id>/', views.delete_property, name='delete_property'),
+    path('update_property_page/<int:id>/', views.update_property_page, name='update_property_page'),
+    path('update_property/<int:id>/',views.property_update_db,name='update_property_db'),
+    # update and deletion ends
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

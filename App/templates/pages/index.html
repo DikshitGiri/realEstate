@@ -39,22 +39,12 @@
         }
 
         /* Custom style for the house image and slogan row */
-        .house-image-container {
-            background-image: url('beautiful-house-image.jpg'); /* Replace with your house image */
-            background-size: cover;
-            background-position: right center;
-            color: #fff;
-            text-align: left;
-            padding: 40px;
-            border: 1px solid #ddd; /* Border style */
-            border-radius: 10px; /* Rounded corners */
-            overflow: hidden; /* Clip the image to the container */
-        }
+
 
         .house-image {
             width: 100%;
             height: auto;
-            clip-path: polygon(0 0, 100% 0, 100% 80%, 0% 100%); /* Clip the image */
+            border-top-left-radius: 70px;
         }
 
         .slogan {
@@ -78,7 +68,7 @@
     <div class="container ">
         
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-6"><br/><br/><br/><br/><br/>
                     <h1 class="slogan">Find Your Dream Home with <br/> OnlineKarobar</h1>
                     <p style="color: #007bff;">Your trusted partner in real estate</p>
                    
@@ -92,93 +82,102 @@
     </div>
     <br/><br/> <br/>
     <!-- Search Form -->
-    <div class="container search-container">
-        <form method="post" action="{%url 'property_search' %}">
-            {%csrf_token%}
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="type">Type</label>
-                        <div class="input-group">
-                            <select class="form-control" id="type" name="property_type">
-                                
-                                {%for item in property_list %}
-                                <option>{{item.property_type}}</option>
-                                {%endfor%}
-                              
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="location">Location</label>
-                        <div class="input-group">
-                            <select class="form-control" id="location" name="location">
-                                {%for item in property_list %}
-                                <option><i class="fas fa-home"></i>{{item.location}}</option>
-                                {%endfor%}
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="price-range">Price Range</label>
-                        <div class="input-group">
-                            <select class="form-control" id="price-range" name="price_range">
-                                {%for item in property_list %}
-                                <option><i class="fas fa-home"></i>{{item.price_range}}</option>
-                                {%endfor%}
-                            </select>
-                        </div>
-                    </div>
-                </div>
-            </div><br/>
-            <div class="row ">
-                <div class="col-md-12 text-center">
-                    <button type="submit" class="btn btn-primary">Search</button>
-                </div>
-            </div>
-        </form>
-    </div>
-
+   
     <!-- Search Results -->
     <div class="container mt-4">
+          
         <div class="row">
+            {% for items in properties%}  
             <div class="col-md-4">
-                <div class="card">
-                    <header>
-                    <p>Type</p>
-
-                    </header>
-                    <body>
-                        <p>image here</p>
-                        <p>details here</p>
-
-                    </body>
-                    <footer>
-                        <p>button here</p>
-                    </footer>
-                    <!-- Card Content Goes Here -->
+                <div class="card border-0">
+                    <img src="{{items.image.url}}"  class="card-img-top" style="height: 180px;">
+                    <div class="card-body">
+                        <h5 class="card-title text-primary">{{items.property_type}} </h5>
+                        <p class="card-text"><b>Location</b> {{items.location}} </p>
+                        <p class="card-text text-success"><b>Price</b> {{items.price_range}} </p>
+                        <p class="card-text"><b>Details</b> {{items.details}}</p>
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-primary">Contact</button>
+                            <button class="btn btn-danger">Cancel</button>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <!-- Card Content Goes Here -->
-                </div>
+            {%endfor%}
+        </div>    
+        
+   
+    
+    </div>
+   
+    
+<!-- Footer -->
+<footer class="bg-dark text-light text-center py-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h3>Search</h3>
+                <p>If you have any questions or need assistance, feel free to reach out to us:</p>
+                <p>Email: info@onlinekarobar.com</p>
+                <p>Phone: +1 (123) 456-7890</p>
             </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <!-- Card Content Goes Here -->
+            <div class="col-md-6">
+                <div class="container ">
+                    <form method="POST" action="{%url 'property_search' %}">
+                        {%csrf_token%}
+                        <div class="col">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="type">Type</label>
+                                    <div class="input-group">
+                                        <select class="form-control" id="type" name="property_type">
+                                            
+                                            {%for item in property_list %}
+                                            <option>{{item.property_type}}</option>
+                                            {%endfor%}
+                                          
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="location">Location</label>
+                                    <div class="input-group">
+                                        <select class="form-control" id="location" name="location">
+                                            {%for item in property_list %}
+                                            <option><i class="fas fa-home"></i>{{item.location}}</option>
+                                            {%endfor%}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="price-range">Price Range</label>
+                                    <div class="input-group">
+                                        <select class="form-control" id="price-range" name="price_range">
+                                            {%for item in property_list %}
+                                            <option><i class="fas fa-home"></i>{{item.price_range}}</option>
+                                            {%endfor%}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><br/>
+                        <div class="row-12 ">
+                            <div class=" text-center">
+                                <button type="submit" class="btn btn-primary btn-block">Search</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
+            
             </div>
         </div>
-        <!-- Repeat the above card structure for multiple rows -->
     </div>
+</footer>
 
-    <!-- Include Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.5.0/dist/js/bootstrap.min.js"></script>
 </body>
 </html>
 

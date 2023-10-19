@@ -38,12 +38,12 @@
                         <td>{{item.details}}</td>
                         <td><img src="{{ item.image.url }}"  width="50" height="50"></td>                      
                         <td><div class="btn-group" role="group">
-                            <button type="button" class="btn btn-primary">
-                                 Update
-                            </button>
-                            <button type="button" class="btn btn-danger">
-                                 Delete
-                            </button>
+                            <a class="btn btn-primary" href="{%url 'update_property_page' item.id%}">
+                                Update
+                            </a>
+                            <a class="btn btn-danger" href="{%url 'delete_property' item.id %}">
+                                Delete
+                            </a>
                         </div></td>
                         
                     </tr>
