@@ -23,19 +23,24 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     # pages
-    path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls),  
+    
     path('broker',views.broker_login_page, name="broker_login_page"),
     path("broker_register_page",views.broker_register_page,name="broker_register_page"),
     path('',views.index, name="index"),
-    path('realEstate_dashboard', views.realEstate_dashboard, name='realEstate_dashboard_page'),
+    path('realEstate_dashboard', views.realEstate_dashboard, name='realEstate_dashboard'),
     path('add_property',views.add_property_page, name='add_property_page'),
     path('docs',views.docs_page,name='docs_page'),
+    path('broker_dashboard', views.broker_dashboard, name='broker_dashboard'),
+
     path('property_table', views.property_table_page,name='property_table_page'),
     path ('property_type',views.property_type_page,name="property_type_page"),
     # pages ends
     #login logout begins
+    path('owner_login',views.owner_login,name='owner_login'),
     path('broker_login',views.broker_login, name='broker_login'),
     path('broker_register',views.broker_register,name="broker_register"),
+    path('log_out',views.log_out,name="log_out"),
     #login logout ends
      
     # insertion process begins

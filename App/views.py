@@ -1,10 +1,11 @@
 from django.http import HttpResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect,render
 from .models import Property_type
 from .models import Property
 from django.contrib import messages
 from django.contrib.auth.models import User
-from django.contrib.auth import login,authenticate
+from django.contrib.auth import login,authenticate,logout
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
@@ -14,9 +15,30 @@ def index(request):
     properties=Property.objects.all()
     return render(request, "pages/index.html",{'property_list':property_list,'properties':properties})
 
-
-def realEstate_dashboard(request):
-    return render(request, "components/overview.html")
+@login_required
+def realEstate_dashboard(request): 
+    if request.method=="post":
+        property_type=request.POST.get('property_type')
+        location=request.POST.get('location')
+        price=request.POST.get('price_range')
+        image=request.FILES.get('property_image')
+        details=request.POST.get('property_details')
+        print(property_type,location,image)
+        try:
+            property=Property(property_type=property_type, location=location,price_range=price,image=image,details=details)
+            request_count = request.session.get('property_request_count', 0)
+            request_count += 1
+            request.session['property_request_count'] = request_count
+            print(request_count)
+            return render(request,'components/overview.html',{'notification':request_count})
+        except Exception as e:
+            return HttpResponse("failed")
+    else:   
+        return render(request, "components/overview.html")
+def broker_dashboard(request):
+    property=Property_type.objects.all()
+    return render(request,"components/brokers.html",{'property_types': property})
+  
 
 
 def add_property_page(request):
@@ -40,9 +62,12 @@ def property_type_page(request):
 
 def broker_login_page(request):
     return render(request,'pages/broker_login.html')
+def owner_login_page(request):
+    return render(request,'pages/owner_login.html')
 
 def broker_register_page(request):
     return render(request,'pages/broker_register.html')
+
 def update_property_page(request,id):
     updateable_property=Property.objects.get(id=id)
     property_type=Property_type.objects.all()
@@ -52,8 +77,23 @@ def update_property_page(request,id):
 
 
 # login and register begins
-def estate_owner_login(request):
-    return HttpResponse("welcome sir")
+def owner_login(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None and user.is_superuser:
+            login(request, user)        
+            return redirect("realEstate_dashboard")  # Redirect to the dashboard for superusers
+        else:
+            # Authentication failed, handle the error (e.g., show an error message).
+            # return redirect('owner_login_page')
+            return HttpResponse('failed')
+    else:    
+
+
+        return render(request,'pages/owner_login.html')
+   
 
 
 def broker_register(request):
@@ -88,7 +128,8 @@ def broker_login(request):
 
         if user is not None:
             login(request, user)
-            return HttpResponse("login succed")
+            return redirect("broker_dashboard")
+            
             # return redirect('#')  
         else:
             return HttpResponse('invalid username or password')
@@ -215,3 +256,8 @@ def delete_property(request,id):
    
 
 #deletion ends
+#logout begins
+def log_out(request):
+    logout(request)
+    return redirect('owner_login')
+#logout ends
