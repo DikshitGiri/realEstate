@@ -41,6 +41,7 @@ urlpatterns = [
     path('broker_login',views.broker_login, name='broker_login'),
     path('broker_register',views.broker_register,name="broker_register"),
     path('log_out',views.log_out,name="log_out"),
+    path('broker_logout',views.broker_logout,name="broker_logout"),
     #login logout ends
      
     # insertion process begins
@@ -64,5 +65,8 @@ urlpatterns = [
     #sales begins
     path('mark_property_as_sold/<int:property_id>/', views.mark_property_as_sold, name='mark_property_as_sold'),
     #sales ends
+    # notification inquiries begins
+    path('inquired_notification/<int:notification_id>/', views.inquired_notification, name='inquired_notification'),
+    # notification inquiries ends
 
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -30,4 +30,5 @@ class Notification(models.Model):
     details = models.TextField()
     image = models.ImageField(upload_to='notification_images/')
     status = models.CharField(max_length=20, default='Pending')
+    inquires=models.TextField(default='not inquired')
 

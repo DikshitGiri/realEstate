@@ -110,8 +110,10 @@
                         <p class="card-text text-success"><b>Price</b> {{items.price_range}} </p>
                         <p class="card-text"><b>Details</b> {{items.details}}</p>
                         <div class="d-grid gap-2">
-                            <button class="btn btn-primary">Contact</button>
-                            <button class="btn btn-danger">Cancel</button>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="popover" title="Contact" data-bs-content="Email: info@onlinekarobar.com &lt;br/&gt; Phone: +1 (123) 456-7890 &lt;br/&gt; Have any questions or need assistance? Feel free to reach out to us:" data-bs-html="true" data-bs-trigger="focus">
+                                Contact
+                              </button>
+                              <a class="btn btn-danger" href="{% url 'index' %}">Cancel</a>
                         </div>
                     </div>
                 </div>

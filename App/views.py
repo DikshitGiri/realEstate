@@ -2,7 +2,7 @@ import base64
 from django.utils import timezone 
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect,render
-
+from django.db.models import Sum
 from realEstate import settings
 from .models import Notification, Property_type
 from .models import Property
@@ -12,6 +12,7 @@ from django.contrib.auth import login,authenticate,logout
 from django.contrib.auth.decorators import login_required
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
+from django.db.models import Q
 import shutil
 
 
@@ -29,6 +30,10 @@ def realEstate_dashboard(request):
     accepted_request=Notification.objects.filter(status="Accepted").count()
     rejected_request=Notification.objects.filter(status="Rejected").count()
     property_in_stock=Property.objects.all().count()
+    # retriving property type of sold properties
+    sold_properties=Property.objects.filter(status="Sold")
+    sold_property_types = sold_properties.values_list('property_type', flat=True).distinct()
+    sold_property_prices=sold_properties.values_list('price_range', flat=True)
     Total_property_count=property_in_stock+accepted_request
 
    
@@ -59,12 +64,12 @@ def realEstate_dashboard(request):
             return redirect ('broker_dashboard')
         
     else:   
-        return render(request, "components/overview.html", {'notification':saved_notification_count,'new_posts': new_posts,'accepted_request':accepted_request,'rejected_request':rejected_request,'property_count':Total_property_count,'property_in_stock':property_in_stock})
+        return render(request, "components/overview.html", {'notification':saved_notification_count,'new_posts': new_posts,'accepted_request':accepted_request,'rejected_request':rejected_request,'property_count':Total_property_count,'property_in_stock':property_in_stock,'sold_property_types': sold_property_types,'sold_property_prices': sold_property_prices})
   
 def broker_dashboard(request):
     user=request.user
-    notification=Notification.objects.filter(user=user)
-    notification_count=Notification.objects.filter(user=user).count()
+    notification=Notification.objects.filter(Q(status="Accepted") | Q(status="Rejected"),user=user,inquires='not inquired')
+    notification_count=Notification.objects.filter(Q(status="Accepted") | Q(status="Rejected"),user=user,inquires='not inquired').count()
     
     property=Property_type.objects.all()
     
@@ -340,6 +345,13 @@ def mark_property_as_sold(request, property_id):
     property.save()
     return redirect('docs_page')
 #sales ends
+#notification inquired begins
+def inquired_notification(request, notification_id):
+    notification = get_object_or_404(Notification, pk=notification_id)
+    notification.inquires = 'Inquired'
+    notification.save()
+    return redirect('broker_dashboard')
+#notification inquired ends
 
 
 
@@ -347,4 +359,7 @@ def mark_property_as_sold(request, property_id):
 def log_out(request):
     logout(request)
     return redirect('owner_login')
+def broker_logout(request):
+    logout(request)
+    return redirect('broker_login')
 #logout ends

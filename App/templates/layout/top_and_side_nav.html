@@ -144,18 +144,18 @@
 								href="#"
 								role="button"
 								aria-expanded="false"
-								><img
-									src="{%static 'assets/images/user.png'%}"
+								><img  style="border-radius: 50%;"
+									src="{%static 'assets/images/avatar.png'%}"
 									alt="user profile"
 							/></a>
 							<ul class="dropdown-menu" aria-labelledby="user-dropdown-toggle">
-								<li>
+								<!-- <li>
 									<a class="dropdown-item" href="account.html">Account</a>
 								</li>
 								<li>
 									<a class="dropdown-item" href="settings.html">Settings</a>
 								</li>
-								<li><hr class="dropdown-divider" /></li>
+								<li><hr class="dropdown-divider" /></li> -->
 								<li><a class="dropdown-item" href="{% url 'log_out' %}">Log Out</a></li>
 							</ul>
 						</div>
@@ -179,7 +179,7 @@
 					><img
 						class="logo-icon me-2"
 						src="{%static 'assets/images/app-logo.svg '%}"
-						alt="logo" /><span class="logo-text">Karobar</span></a
+						alt="logo" /><span class="logo-text">KarobarNepal</span></a
 				>
 			</div>
 			<!--//app-branding-->
