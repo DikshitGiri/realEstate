@@ -90,9 +90,14 @@
             {% for items in properties%}  
             <div class="col-md-4">
                 <div class="card border-0">
-                    <img src="{{items.image.url}}"  class="card-img-top" style="height: 180px;">
+                    
                     <div class="card-body">
-                        <h5 class="card-title text-primary">{{items.property_type}} </h5>
+                        {%if items.image%}
+                    <img src="{{items.image.url}}"  class="card-img-top" style="height: 180px;">
+                    {%else%}
+                    <h5 class="card-title text-danger">no image available</h5>
+                    {%endif%}
+                    <p class="card-text text-primary"><b>Type </b>{{items.property_type}} </p>
                         <p class="card-text"><b>Location</b> {{items.location}} </p>
                         <p class="card-text text-success"><b>Price</b> {{items.price_range}} </p>
                         <p class="card-text"><b>Details</b> {{items.details}}</p>

@@ -57,4 +57,12 @@ urlpatterns = [
     path('update_property_page/<int:id>/', views.update_property_page, name='update_property_page'),
     path('update_property/<int:id>/',views.property_update_db,name='update_property_db'),
     # update and deletion ends
+    # notifications starts
+    path('accept_notification/<int:notification_id>/', views.accept_notification, name='accept_notification'),
+    path('reject_notification/<int:notification_id>/', views.reject_notification, name='reject_notification'),
+    # notification ends
+    #sales begins
+    path('mark_property_as_sold/<int:property_id>/', views.mark_property_as_sold, name='mark_property_as_sold'),
+    #sales ends
+
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

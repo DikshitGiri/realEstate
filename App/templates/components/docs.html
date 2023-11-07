@@ -46,7 +46,11 @@
                     <div class="app-card app-card-doc shadow-sm  h-100">
                         <div class="app-card-thumb-holder p-3">
                             <div class="app-card-thumb">
+                                {% if item.image %}
                                 <img class="thumb-image" src="{{ item.image.url }}" alt="">
+                                {% else %}
+                                <p class="text-white">No Image</p>
+                                {% endif %}
                             </div>
                              <a class="app-card-link-mask" href="#file-link"></a>
                         </div>
@@ -62,15 +66,17 @@
                                 </ul>
                             </div><!--//app-doc-meta-->
                             
-                    
-                             
+                            <form method="post" action="{%url 'mark_property_as_sold'   item.id%} " >
+                                {%csrf_token%}
+                            <button type="submit" class="btn btn-danger">Sold</button>
+                        </form>
                          </div><!--//app-card-actions-->
                                 
                         </div><!--//app-card-body-->
-
+                    
                     </div><!--//app-card-->
                 <!-- </div> -->
-
+                   
                 {% endfor%}
                 </div>
             </div>
